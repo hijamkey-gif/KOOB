@@ -1,0 +1,27 @@
+# ===== Build =====
+build/
+*/build/
+Debug/
+*/Debug/
+Release/
+*/Release/
+
+# ===== Qt =====
+*.pro.user
+*.user
+*.autosave
+
+# ===== MSVC =====
+*.obj
+*.pch
+*.ilk
+*.pdb
+*.exe
+
+# ===== CMake =====
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+
+# ===== System =====
+.vs/
