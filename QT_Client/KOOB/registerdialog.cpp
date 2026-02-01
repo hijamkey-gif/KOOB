@@ -31,7 +31,7 @@ void RegisterDialog::on_get_code_clicked()
         //发送验证码
         QJsonObject json_obj;
         json_obj["email"] = email;
-        showTip(gate_url_prefix,true);
+        //showTip(gate_url_prefix,true);
         HttpMgr::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/get_varifycode"),
                                             json_obj, ReqId::ID_GET_VARIFY_CODE,Modules::REGISTERMOD);
 
