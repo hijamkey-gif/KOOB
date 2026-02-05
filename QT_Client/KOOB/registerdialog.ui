@@ -270,7 +270,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="email_lineEdit">
+              <widget class="QLineEdit" name="email_edit">
                <property name="maximumSize">
                 <size>
                  <width>250</width>

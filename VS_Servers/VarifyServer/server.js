@@ -5,11 +5,29 @@ const { v4: uuidv4 } = require('uuid');
 const message_proto = require('./proto.js');
 const const_module = require('./const');
 const emailModule = require('./email');
+const redis_module = require('./redis');
 
 async function GetVarifyCode(call, callback) {
     console.log("email is ", call.request.email)
     try{
-        uniqueId = uuidv4();
+        let query_res = await redis_module.GetRedis(const_module.code_prefix+call.request.email);
+        console.log("query_res is ", query_res)
+        if(query_res == null){
+        }
+        let uniqueId = query_res;
+        if(query_res ==null){
+            uniqueId = uuidv4();
+            if (uniqueId.length > 4) {
+                uniqueId = uniqueId.substring(0, 4);
+            } 
+            let bres = await redis_module.SetRedisExpire(const_module.code_prefix+call.request.email, uniqueId,600)
+            if(!bres){
+                callback(null, { email:  call.request.email,
+                    error:const_module.Errors.RedisErr
+                });
+                return;
+            }
+        }
         console.log("uniqueId is ", uniqueId)
         let text_str =  '您的验证码为'+ uniqueId +'请三分钟内完成注册'
         //发送邮件
@@ -21,6 +39,14 @@ async function GetVarifyCode(call, callback) {
         };
         let send_res = await emailModule.SendMail(mailOptions);
         console.log("send res is ", send_res)
+
+        if(!send_res){
+            callback(null, { email:  call.request.email,
+                error:const_module.Errors.RedisErr
+            }); 
+            return;
+        }
+
         callback(null, { email:  call.request.email,
             error:const_module.Errors.Success
         }); 
@@ -31,6 +57,8 @@ async function GetVarifyCode(call, callback) {
         }); 
     }
 }
+
+
 function main() {
     var server = new grpc.Server()
     server.addService(message_proto.VarifyService.service, { GetVarifyCode: GetVarifyCode })

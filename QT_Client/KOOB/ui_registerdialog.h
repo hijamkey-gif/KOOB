@@ -45,7 +45,7 @@ public:
     QWidget *widget_7;
     QHBoxLayout *horizontalLayout_6;
     QLabel *email_label;
-    QLineEdit *email_lineEdit;
+    QLineEdit *email_edit;
     QWidget *widget_4;
     QHBoxLayout *horizontalLayout_3;
     QLabel *pass_label;
@@ -172,11 +172,11 @@ public:
 
         horizontalLayout_6->addWidget(email_label);
 
-        email_lineEdit = new QLineEdit(widget_7);
-        email_lineEdit->setObjectName("email_lineEdit");
-        email_lineEdit->setMaximumSize(QSize(250, 16777215));
+        email_edit = new QLineEdit(widget_7);
+        email_edit->setObjectName("email_lineEdit");
+        email_edit->setMaximumSize(QSize(250, 16777215));
 
-        horizontalLayout_6->addWidget(email_lineEdit);
+        horizontalLayout_6->addWidget(email_edit);
 
 
         verticalLayout->addWidget(widget_7);

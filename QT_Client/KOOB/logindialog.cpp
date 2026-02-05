@@ -13,3 +13,4 @@ LoginDialog::~LoginDialog()
 {
     delete ui;
 }
+

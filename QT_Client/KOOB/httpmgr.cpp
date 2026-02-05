@@ -18,8 +18,10 @@ void HttpMgr::PostHttpReq(QUrl url, QJsonObject json, ReqId req_id, Modules mod)
     auto self = shared_from_this();
     QNetworkReply* reply = _manager.post(request,data);
     QObject::connect(reply,&QNetworkReply::finished,[self,reply,req_id,mod](){
+        // 处理错误情况
         if(reply->error() != QNetworkReply::NoError){
             qDebug() << reply->errorString();
+            // 发送信号通知完成
             emit self->sig_http_finish(req_id,"",ErrorCodes::ERR_NETWORK,mod);
             reply->deleteLater();
             return;

@@ -107,7 +107,7 @@ void TestRedisMgr() {
 int main()
 {
     //TestRedis();
-    TestRedisMgr();
+    //TestRedisMgr();
 
     unsigned short gate_port = atoi((*ConfigMgr::GetInstance())["GateServer"]["Port"].c_str());
     try
