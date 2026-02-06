@@ -22,10 +22,18 @@ private slots:
     void on_confirm_btn_clicked();
 
 private:
+    bool checkUserValid();
+    bool checkEmailValid();
+    bool checkPassValid();
+    bool checkVarifyValid();
+    void AddTipErr(TipErr te,QString tips);
+    void DelTipErr(TipErr te);
+
     void initHttpHandlers();
     void showTip(QString str,bool state);
     Ui::RegisterDialog *ui;
     QMap<ReqId,std::function<void(const QJsonObject&)>> _handlers;
+    QMap<TipErr, QString> _tip_errs;
 };
 
 #endif // REGISTERDIALOG_H

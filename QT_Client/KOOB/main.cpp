@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     QString fileName = "config.ini";
     QString config_path = QDir::toNativeSeparators(app_path +
                                                    QDir::separator() + fileName);
+    qDebug() << config_path;
     QSettings settings(config_path, QSettings::IniFormat);
     QString gate_host = settings.value("GateServer/host").toString();
     QString gate_port = settings.value("GateServer/port").toString();

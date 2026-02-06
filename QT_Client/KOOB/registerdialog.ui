@@ -377,9 +377,9 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="get_code">
+              <widget class="TimerBtn" name="get_code">
                <property name="text">
-                <string>获取验证码</string>
+                <string>获取</string>
                </property>
               </widget>
              </item>
@@ -459,6 +459,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>TimerBtn</class>
+   <extends>QPushButton</extends>
+   <header>timerbtn.h</header>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="rc.qrc"/>
  </resources>
