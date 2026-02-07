@@ -33,6 +33,20 @@ RegisterDialog::RegisterDialog(QWidget *parent)
         checkVarifyValid();
     });
 
+    //设置浮动显示手形状
+    ui->pass_visible->setCursor(Qt::PointingHandCursor);
+    ui->pass_visible->SetState("unvisible","unvisible_hover","","visible",
+                               "visible_hover","");
+    //连接点击事件
+    connect(ui->pass_visible, &ClickedLabel::clicked, this, [this]() {
+        auto state = ui->pass_visible->GetCurState();
+        if(state == ClickLbState::Normal){
+            ui->pass_edit->setEchoMode(QLineEdit::Password);
+        }else{
+            ui->pass_edit->setEchoMode(QLineEdit::Normal);
+        }
+        qDebug() << "Label was clicked!";
+    });
 }
 
 bool RegisterDialog::checkUserValid()
@@ -93,8 +107,6 @@ bool RegisterDialog::checkVarifyValid()
     DelTipErr(TipErr::TIP_VARIFY_ERR);
     return true;
 }
-
-
 
 void RegisterDialog::AddTipErr(TipErr te, QString tips)
 {
@@ -176,7 +188,12 @@ void RegisterDialog::initHttpHandlers()
         auto email = jsonObj["email"].toString();
         showTip(tr("用户注册成功"), true);
         qDebug()<< "user id is " << jsonObj["uid"].toString() ;
-        qDebug()<< "email is " << email ;
+        qDebug()<< "email is " << email ;\
+
+        // 注册成功，自动切换页面
+        QTimer::singleShot(500,this,[this](){
+            emit sigSwitchLogin();
+        });
     });
 }
 

@@ -21,6 +21,7 @@ public:
 
 public:
     void SlotSwitchReg();
+    void SlotReturnLog();
 
 private:
     Ui::MainWindow *ui;

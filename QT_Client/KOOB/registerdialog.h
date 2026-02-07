@@ -21,6 +21,9 @@ private slots:
     void slot_reg_mod_finish(ReqId id,QString res, ErrorCodes err);
     void on_confirm_btn_clicked();
 
+signals:
+    void sigSwitchLogin();
+
 private:
     bool checkUserValid();
     bool checkEmailValid();
