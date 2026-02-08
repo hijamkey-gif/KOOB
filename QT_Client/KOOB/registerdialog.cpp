@@ -9,13 +9,13 @@ RegisterDialog::RegisterDialog(QWidget *parent)
 {
     ui->setupUi(this);
     ui->pass_edit->setEchoMode(QLineEdit::Password);
+    ui->err_tip->clear();
     ui->err_tip->setProperty("state","normal");
     repolish(ui->err_tip);
     connect(HttpMgr::GetInstance().get(),&HttpMgr::sig_reg_mod_finish,
             this,&RegisterDialog::slot_reg_mod_finish);
 
     initHttpHandlers();
-    ui->err_tip->clear();
 
     connect(ui->user_edit,&QLineEdit::editingFinished,this,[this](){
         checkUserValid();
@@ -235,5 +235,11 @@ void RegisterDialog::on_confirm_btn_clicked()
     json_obj["varifycode"] = ui->varify_edit->text();
     HttpMgr::GetInstance()->PostHttpReq(QUrl(gate_url_prefix+"/user_register"),
                                         json_obj, ReqId::ID_REG_USER,Modules::REGISTERMOD);
+}
+
+
+void RegisterDialog::on_cancel_btn_clicked()
+{
+    emit sigSwitchLogin();
 }
 
