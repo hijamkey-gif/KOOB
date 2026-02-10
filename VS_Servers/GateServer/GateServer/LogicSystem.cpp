@@ -3,6 +3,7 @@
 #include "VerifyGrpcClient.h"
 #include "RedisMgr.h"
 #include "MySqlMgr.h"
+#include "StatusGrpcClient.h"
 
 LogicSystem::~LogicSystem()
 {
@@ -232,14 +233,14 @@ LogicSystem::LogicSystem()
             return true;
         }
         //查询StatusServer找到合适的连接
-        /*auto reply = StatusGrpcClient::GetInstance()->GetChatServer(userInfo.uid);
+        auto reply = StatusGrpcClient::GetInstance()->GetChatServer(userInfo.uid);
         if (reply.error()) {
             std::cout << " grpc get chat server failed, error is " << reply.error() << std::endl;
-            root["error"] = ErrorCodes::RPCGetFailed;
+            root["error"] = ErrorCodes::RPCFailed;
             std::string jsonstr = root.toStyledString();
             beast::ostream(connection->_response.body()) << jsonstr;
             return true;
-        }*/
+        }
         std::cout << "succeed to load userinfo uid is " << userInfo.uid << std::endl;
         root["error"] = 0;
         root["email"] = email;
