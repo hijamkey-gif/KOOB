@@ -65,21 +65,18 @@ ChatServer StatusServiceImpl::getChatServer() {
 	//	minServer.con_count = std::stoi(count_str);
 	//}
 
-	//// 使用范围基于for循环
-	//for ( auto& server : _servers) {
-	//	
-	//	if (server.second.name == minServer.name) {
+	// 使用范围基于for循环
+	//for (auto& server : _servers) {
+	//	/*if (server.second.name == minServer.name) {
 	//		continue;
 	//	}
-
 	//	auto count_str = RedisMgr::GetInstance()->HGet(LOGIN_COUNT, server.second.name);
 	//	if (count_str.empty()) {
 	//		server.second.con_count = INT_MAX;
 	//	}
 	//	else {
 	//		server.second.con_count = std::stoi(count_str);
-	//	}
-
+	//	}*/
 	//	if (server.second.con_count < minServer.con_count) {
 	//		minServer = server.second;
 	//	}
@@ -97,7 +94,7 @@ Status StatusServiceImpl::Login(ServerContext* context, const LoginReq* request,
 	std::string token_key = USERTOKENPREFIX + uid_str;
 	std::string token_value = "";
 	bool success = RedisMgr::GetInstance()->Get(token_key, token_value);
-	if (success) {
+	if (!success) {
 		reply->set_error(ErrorCodes::UidInvalid);
 		return Status::OK;
 	}
