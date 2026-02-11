@@ -19,11 +19,9 @@ public:
         });
         return _instance;
     }
-
-    void PrintAddress(){
-        std::cout << _instance.get() <<std::endl;
-    }
-
+    // void PrintAddress(){
+    //     std::cout << _instance.get() <<std::endl;
+    // }
     ~Singleton(){
         std::cout << "Singleton destruct!" <<std::endl;
     }
@@ -31,6 +29,5 @@ public:
 
 template<typename T>
 std::shared_ptr<T> Singleton<T>::_instance = nullptr;
-
 
 #endif // SINGLETON_H
