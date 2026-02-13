@@ -1,26 +1,25 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "QGraphicsDropShadowEffect"
+#include "tcpmgr.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    // QGraphicsDropShadowEffect* shadow = new QGraphicsDropShadowEffect(this);
-    // shadow->setBlurRadius(100);
-    // shadow->setOffset(0, 20);
-    // shadow->setColor(QColor(0, 0, 0, 150));
-    // ui->centralwidget->setGraphicsEffect(shadow);
-    //setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     _login_dlg = new LoginDialog(this);
-    //_login_dlg->show();
     setCentralWidget(_login_dlg);
     _login_dlg->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
     _login_dlg->show();
     connect(_login_dlg,&LoginDialog::switchRegister,this,&MainWindow::SlotSwitchReg);
     //连接登录界面忘记密码信号
     connect(_login_dlg, &LoginDialog::switchReset, this, &MainWindow::SlotSwitchReset);
+    connect(TcpMgr::GetInstance().get(),&TcpMgr::sig_switch_chatdlg, this, &MainWindow::SlotSwitchChat);
+
+    // 测试切换到聊天界面
+    SlotSwitchChat();
+
 }
 
 MainWindow::~MainWindow()
@@ -81,4 +80,15 @@ void MainWindow::SlotSwitchReset()
     _reset_dlg->show();
     //注册返回登录信号和槽函数
     connect(_reset_dlg, &ResetDialog::sigSwitchLogin, this, &MainWindow::SlotReturnLog2);
+}
+
+void MainWindow::SlotSwitchChat()
+{
+    _chat_dlg = new ChatDialog();
+    _chat_dlg->setWindowFlags(Qt::CustomizeWindowHint|Qt::FramelessWindowHint);
+    setCentralWidget(_chat_dlg);
+    _chat_dlg->show();
+    _login_dlg->hide();
+    //this->setMinimumSize(QSize(400,400));
+    //this->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 }
