@@ -20,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     // 测试切换到聊天界面
     SlotSwitchChat();
 
+    this->setMinimumSize(800,500);
+    //this->setMaximumSize(800,500);
+
 }
 
 MainWindow::~MainWindow()
@@ -90,5 +93,5 @@ void MainWindow::SlotSwitchChat()
     _chat_dlg->show();
     _login_dlg->hide();
     //this->setMinimumSize(QSize(400,400));
-    //this->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    this->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
 }

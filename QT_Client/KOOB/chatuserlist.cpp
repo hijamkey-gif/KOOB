@@ -26,7 +26,7 @@ bool ChatUserList::eventFilter(QObject *watched, QEvent *event)
     if (watched == this->viewport() && event->type() == QEvent::Wheel) {
         QWheelEvent *wheelEvent = static_cast<QWheelEvent*>(event);
         int numDegrees = wheelEvent->angleDelta().y() / 8;
-        int numSteps = numDegrees / 15; // 计算滚动步数
+        int numSteps = numDegrees / 10; // 计算滚动步数
 
         // 设置滚动幅度
         this->verticalScrollBar()->setValue(this->verticalScrollBar()->value() - numSteps);

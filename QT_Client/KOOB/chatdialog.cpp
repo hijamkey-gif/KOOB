@@ -1,6 +1,7 @@
 #include "chatdialog.h"
 #include "ui_chatdialog.h"
 #include "chatuserwid.h"
+#include "loadingdlg.h"
 #include <QAction>
 #include <QRandomGenerator>
 
@@ -47,7 +48,25 @@ ChatDialog::ChatDialog(QWidget *parent)
     });
 
     ShowSearch(false);
+
+    connect(ui->chat_user_list,&ChatUserList::sig_loading_chat_user,this,&ChatDialog::slot_loading_chat_user);
     addChatUserList();
+}
+
+void ChatDialog::slot_loading_chat_user()
+{
+    if(_b_loading){
+        return;
+    }
+    _b_loading = true;
+    LoadingDlg *loadingDialog = new LoadingDlg(this);
+    loadingDialog->setModal(true);
+    loadingDialog->show();
+    qDebug() << "add new data to list.....";
+    addChatUserList();
+    // 加载完成后关闭对话框
+    loadingDialog->deleteLater();
+    _b_loading = false;
 }
 
 ChatDialog::~ChatDialog()
