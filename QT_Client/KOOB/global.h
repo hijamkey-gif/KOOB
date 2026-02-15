@@ -80,5 +80,19 @@ enum ListItemType{
     APPLY_FRIEND_ITEM, //好友申请
 };
 
+enum class ChatRole
+{
+    Self,
+    Other
+};
+
+struct MsgInfo{
+    QString msgFlag;//"text,image,file"
+    QString content;//表示文件和图像的url,文本信息
+    QPixmap pixmap;//文件和图片的缩略图
+};
+
+
+
 #endif // GLOBAL_H
 

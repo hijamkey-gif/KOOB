@@ -170,3 +170,7 @@ LoadingDlg{
 #chat_area{
     border:none;
 }
+
+#chat_user_name{
+    color:rgb(250,250,250);
+}
