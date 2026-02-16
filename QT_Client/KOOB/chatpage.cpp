@@ -34,7 +34,7 @@ void ChatPage::paintEvent(QPaintEvent *event)
 void ChatPage::on_send_btn_clicked()
 {
     auto pTextEdit = ui->chatEdit;
-    ChatRole role = ChatRole::Other;
+    ChatRole role = ChatRole::Self;
     QString userName = QStringLiteral("HJK");
     QString userIcon = ":/res/Green.jpg";
 
