@@ -17,6 +17,8 @@ public:
 
     ClickLbState GetCurState();
     bool SetCurState(ClickLbState state);
+    void ResetNormalState();
+
 protected:
 
 private:
