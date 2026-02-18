@@ -297,5 +297,134 @@ LoadingDlg{
    border-radius: 20px; /* 设置圆角 */
 }
 
+#ApplyFriend{
+    border: none;
+    font-size: 14px;
+    background: rgb(25, 33, 45);
+}
+
+#label_4,#label_2,#label_3{
+    background: rgb(25,33,45);
+    color:rgb(200,200,200);
+}
+
+#lb_group_wid{
+    background: rgb(25,33,45);
+}
+
+#gridWidget{
+    background: rgb(25,33,45);
+}
+
+#scrollArea{
+    background: rgb(25,33,45);
+    border: none;
+}
+
+#scrollcontent{
+     background: rgb(25,33,45);
+     border:none;
+}
+
+#scrollcontent #apply_lb{
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#apply_wid QLabel{
+    font-size: 14px;
+    height: 25px;
+}
+
+#apply_wid #name_ed, #apply_wid #back_ed{
+    border: none;
+    font-size: 14px;
+}
+
+#apply_wid #lb_ed {
+    border: none;
+    font-size: 14px;
+}
+
+#more_lb{
+    border-image: url(:/res/arowdown.png);
+    color:rgb(100,100,100);
+}
+
+#apply_wid #tipslb[state='normal'] {
+    padding: 2px;
+    background: #e1e1e1;
+    color: rgb(200,200,200);
+    border-radius: 10px;
+}
+
+#apply_wid #tipslb[state='hover'] {
+    padding: 2px;
+    background: #e1e1e1;
+    color:rgb(200,200,200);
+    border-radius: 10px;
+}
+
+#apply_wid #tipslb[state='pressed'] {
+    padding: 2px;
+    background: #e1e1e1;
+    color:rgb(200,200,200);
+    border-radius: 10px;
+}
+
+#apply_wid #tipslb[state='selected_normal'] {
+    padding: 2px;
+    background: #e1e1e1;
+    color:rgb(200,200,200);
+    border-radius: 10px;
+}
+
+#apply_wid #tipslb[state='selected_hover'] {
+    padding: 2px;
+    background: #e1e1e1;
+    color:rgb(200,200,200);
+    border-radius: 10px;
+}
+
+#apply_lb{
+    background: rgb(25,33,45);
+    color:rgb(200,200,200);
+}
+
+#apply_wid #tipslb[state='selected_pressed'] {
+    padding: 2px;
+    background: #e1e1e1;
+    color: #1e1e1e;
+    border-radius: 10px;
+}
+
+#input_tip_wid {
+    background: #d3eaf8;
+}
+
+#apply_wid #FriendLabel {
+    background: #daf6e7;
+    color: rgb(255,255,255);
+    border-radius: 10px;
+}
+
+#apply_wid #tip_lb {
+    padding-left: 2px;
+    color:rgb(153,153,153);
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+}
+
+#gridWidget {
+   background: rgb(25,33,45);
+}
+
+CustomizeEdit {
+    background: rgb(100,33,45);
+    color:rgb(200,200,200);
+    border:none;
+}
+
+
 
 
