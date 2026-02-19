@@ -92,6 +92,31 @@ struct MsgInfo{
     QPixmap pixmap;//文件和图片的缩略图
 };
 
+const std::vector<QString>  strs ={"hello world !",
+                                   "nice to meet u",
+                                   "New year，new life",
+                                   "You have to love yourself",
+                                   "My love is written in the wind ever since the whole world is you"};
+
+const std::vector<QString> heads = {
+    ":/res/Red.jpg",
+    ":/res/Blue.jpg",
+    ":/res/Green.jpg",
+    ":/res/Yellow.jpg",
+    ":/res/Pink.jpg"
+};
+
+const std::vector<QString> names = {
+    "HanMeiMei",
+    "Lily",
+    "Miku",
+    "Androw",
+    "Max",
+    "Summer",
+    "Candy",
+    "Hunter"
+};
+
 //申请好友标签输入框最低长度
 const int MIN_APPLY_LABEL_ED_LEN = 40;
 
