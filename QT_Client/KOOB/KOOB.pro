@@ -19,6 +19,7 @@ SOURCES += \
     adduseritem.cpp \
     applyfriend.cpp \
     applyfrienditem.cpp \
+    applyfriendlist.cpp \
     applyfriendpage.cpp \
     bubbleframe.cpp \
     chatdialog.cpp \
@@ -59,6 +60,7 @@ HEADERS += \
     adduseritem.h \
     applyfriend.h \
     applyfrienditem.h \
+    applyfriendlist.h \
     applyfriendpage.h \
     bubbleframe.h \
     chatdialog.h \

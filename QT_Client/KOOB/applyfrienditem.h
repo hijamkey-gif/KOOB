@@ -10,7 +10,7 @@ namespace Ui {
 class ApplyFriendItem;
 }
 
-class ApplyFriendItem : public QWidget
+class ApplyFriendItem : public ListItemBase
 {
     Q_OBJECT
 public:
@@ -19,7 +19,7 @@ public:
     void SetInfo(std::shared_ptr<ApplyInfo> apply_info);
     void ShowAddBtn(bool bshow);
     QSize sizeHint() const override {
-        return QSize(250, 80); // 返回自定义的尺寸
+        return QSize(250, 60); // 返回自定义的尺寸
     }
     int GetUid();
 private:

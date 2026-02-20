@@ -88,13 +88,20 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QListWidget" name="apply_friend_list"/>
+       <widget class="ApplyFriendList" name="apply_friend_list"/>
       </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ApplyFriendList</class>
+   <extends>QListWidget</extends>
+   <header location="global">applyfriendlist.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -13,6 +13,7 @@ ChatDialog::ChatDialog(QWidget *parent)
     ,_mode(ChatUIMode::ChatMode)
     ,_state(ChatUIMode::ChatMode)
     ,_b_loading(false)
+    ,_last_widget(nullptr)
 {
     ui->setupUi(this);
     ui->add_btn->SetState("normal","hover","press");
@@ -154,7 +155,6 @@ void ChatDialog::slot_side_contact()
     }else{
         ui->stackedWidget->setCurrentWidget(_last_widget);
     }
-
     _state = ChatUIMode::ContactMode;
     ShowSearch(false);
 }
