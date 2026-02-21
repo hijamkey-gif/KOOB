@@ -10,7 +10,7 @@
 CSession::CSession(boost::asio::io_context& io_context, CServer* server):
 	_socket(io_context), _server(server), _b_close(false),_b_head_parse(false){
 	boost::uuids::uuid  a_uuid = boost::uuids::random_generator()();
-	_uuid = boost::uuids::to_string(a_uuid);
+	_session_id = boost::uuids::to_string(a_uuid);
 	_recv_head_node = make_shared<MsgNode>(HEAD_TOTAL_LEN);
 }
 CSession::~CSession() {
@@ -21,8 +21,20 @@ tcp::socket& CSession::GetSocket() {
 	return _socket;
 }
 
-std::string& CSession::GetUuid() {
-	return _uuid;
+std::string& CSession::GetSessionId()
+{
+	// TODO: 在此处插入 return 语句
+	return _session_id;
+}
+
+void CSession::SetUserId(int uid)
+{
+	_user_uid = uid;
+}
+
+int CSession::GetUserId()
+{
+	return _user_uid;
 }
 
 void CSession::Start(){
@@ -33,7 +45,7 @@ void CSession::Send(std::string msg, short msgid) {
 	std::lock_guard<std::mutex> lock(_send_lock);
 	int send_que_size = _send_que.size();
 	if (send_que_size > MAX_SENDQUE) {
-		std::cout << "session: " << _uuid << " send que fulled, size is " << MAX_SENDQUE << endl;
+		std::cout << "session: " << _session_id << " send que fulled, size is " << MAX_SENDQUE << endl;
 		return;
 	}
 
@@ -50,7 +62,7 @@ void CSession::Send(char* msg, short max_length, short msgid) {
 	std::lock_guard<std::mutex> lock(_send_lock);
 	int send_que_size = _send_que.size();
 	if (send_que_size > MAX_SENDQUE) {
-		std::cout << "session: " << _uuid << " send que fulled, size is " << MAX_SENDQUE << endl;
+		std::cout << "session: " << _session_id << " send que fulled, size is " << MAX_SENDQUE << endl;
 		return;
 	}
 
@@ -80,7 +92,7 @@ void CSession::AsyncReadBody(int total_len)
 			if (ec) {
 				std::cout << "handle read failed, error is " << ec.what() << endl;
 				Close();
-				_server->ClearSession(_uuid);
+				_server->ClearSession(_session_id);
 				return;
 			}
 
@@ -88,7 +100,7 @@ void CSession::AsyncReadBody(int total_len)
 				std::cout << "read length not match, read [" << bytes_transfered << "] , total ["
 					<< total_len<<"]" << endl;
 				Close();
-				_server->ClearSession(_uuid);
+				_server->ClearSession(_session_id);
 				return;
 			}
 
@@ -115,7 +127,7 @@ void CSession::AsyncReadHead(int total_len)
 			if (ec) {
 				std::cout << "handle read failed, error is " << ec.what() << endl;
 				Close();
-				_server->ClearSession(_uuid);
+				_server->ClearSession(_session_id);
 				return;
 			}
 
@@ -123,7 +135,7 @@ void CSession::AsyncReadHead(int total_len)
 				std::cout << "read length not match, read [" << bytes_transfered << "] , total ["
 					<< HEAD_TOTAL_LEN << "]" << endl;
 				Close();
-				_server->ClearSession(_uuid);
+				_server->ClearSession(_session_id);
 				return;
 			}
 
@@ -139,7 +151,7 @@ void CSession::AsyncReadHead(int total_len)
 			//id非法
 			if (msg_id > MAX_LENGTH) {
 				std::cout << "invalid msg_id is " << msg_id << endl;
-				_server->ClearSession(_uuid);
+				_server->ClearSession(_session_id);
 				return;
 			}
 			short msg_len = 0;
@@ -151,7 +163,7 @@ void CSession::AsyncReadHead(int total_len)
 			//id非法
 			if (msg_len > MAX_LENGTH) {
 				std::cout << "invalid data length is " << msg_len << endl;
-				_server->ClearSession(_uuid);
+				_server->ClearSession(_session_id);
 				return;
 			}
 
@@ -180,7 +192,7 @@ void CSession::HandleWrite(const boost::system::error_code& error, std::shared_p
 		else {
 			std::cout << "handle write failed, error is " << error.what() << endl;
 			Close();
-			_server->ClearSession(_uuid);
+			_server->ClearSession(_session_id);
 		}
 	}
 	catch (std::exception& e) {

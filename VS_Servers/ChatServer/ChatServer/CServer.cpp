@@ -1,6 +1,8 @@
 #include "CServer.h"
 #include <iostream>
 #include "AsioIOServicePool.h"
+#include "UserMgr.h"
+
 CServer::CServer(boost::asio::io_context& io_context, short port):_io_context(io_context), _port(port),
 _acceptor(io_context, tcp::endpoint(tcp::v4(),port))
 {
@@ -16,7 +18,7 @@ void CServer::HandleAccept(shared_ptr<CSession> new_session, const boost::system
 	if (!error) {
 		new_session->Start();
 		lock_guard<mutex> lock(_mutex);
-		_sessions.insert(make_pair(new_session->GetUuid(), new_session));
+		_sessions.insert(make_pair(new_session->GetSessionId(), new_session));
 	}
 	else {
 		cout << "session accept failed, error is " << error.what() << endl;
@@ -31,7 +33,12 @@ void CServer::StartAccept() {
 	_acceptor.async_accept(new_session->GetSocket(), std::bind(&CServer::HandleAccept, this, new_session, placeholders::_1));
 }
 
-void CServer::ClearSession(std::string uuid) {
-	lock_guard<mutex> lock(_mutex);
-	_sessions.erase(uuid);
+void CServer::ClearSession(std::string session_id) {
+	if (_sessions.find(session_id) != _sessions.end()) {
+		UserMgr::GetInstance()->RmvUserSession(_sessions[session_id]->GetUserId());
+	}
+	{
+		lock_guard<mutex> lock(_mutex);
+		_sessions.erase(session_id);
+	}
 }
