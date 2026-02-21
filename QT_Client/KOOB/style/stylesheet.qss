@@ -6,6 +6,10 @@ QDialog#LoginDialog,#RegisterDialog,#ResetDialog{
     color:rgb(200,200,200);
 }
 
+#email_edit,#pass_edit,#varify_edit,#user_edit{
+    color:rgb(200,200,200);
+}
+
 #err_tip[state = 'normal']{
     color:green;
 }
