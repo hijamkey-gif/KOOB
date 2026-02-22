@@ -5,6 +5,8 @@
 #include <QScrollBar>
 #include "usermgr.h"
 #include "tcpmgr.h"
+#include <QJsonObject>
+#include <QJsonDocument>
 
 
 ApplyFriend::ApplyFriend(QWidget *parent) :
@@ -482,31 +484,31 @@ void ApplyFriend::SlotApplySure()
 {
     qDebug()<<"Slot Apply Sure called" ;
     //发送请求逻辑
-    // QJsonObject jsonObj;
-    // auto uid = UserMgr::GetInstance()->GetUid();
-    // jsonObj["uid"] = uid;
-    // auto name = ui->name_ed->text();
-    // if(name.isEmpty()){
-    //     name = ui->name_ed->placeholderText();
-    // }
+    QJsonObject jsonObj;
+    auto uid = UserMgr::GetInstance()->GetUid();
+    jsonObj["uid"] = uid;
+    auto name = ui->name_ed->text();
+    if(name.isEmpty()){
+        name = ui->name_ed->placeholderText();
+    }
 
-    // jsonObj["applyname"] = name;
+    jsonObj["applyname"] = name;
 
-    // auto bakname = ui->back_ed->text();
-    // if(bakname.isEmpty()){
-    //     bakname = ui->back_ed->placeholderText();
-    // }
+    auto bakname = ui->back_ed->text();
+    if(bakname.isEmpty()){
+        bakname = ui->back_ed->placeholderText();
+    }
 
-    // jsonObj["bakname"] = bakname;
-    // jsonObj["touid"] = _si->_uid;
+    jsonObj["bakname"] = bakname;
+    jsonObj["touid"] = _si->_uid;
 
-    // QJsonDocument doc(jsonObj);
-    // QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
+    QJsonDocument doc(jsonObj);
+    QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
 
-    // //发送tcp请求给chat server
-    // emit TcpMgr::GetInstance()->sig_send_data(ReqId::ID_ADD_FRIEND_REQ, jsonData);
-    // this->hide();
-    // deleteLater();
+    //发送tcp请求给chat server
+    emit TcpMgr::GetInstance()->sig_send_data(ReqId::ID_ADD_FRIEND_REQ, jsonData);
+    this->hide();
+    deleteLater();
 }
 
 void ApplyFriend::SlotApplyCancel()
