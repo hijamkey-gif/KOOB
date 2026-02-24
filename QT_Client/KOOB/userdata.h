@@ -5,7 +5,7 @@
 
 class SearchInfo{
 public:
-    SearchInfo(int uid,QString name,QString nick,QString desc,int sex);
+    SearchInfo(int uid,QString name,QString nick,QString desc,int sex,QString icon);
     int _uid;
     QString _name;
     QString _nick;
