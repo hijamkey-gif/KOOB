@@ -51,8 +51,8 @@ ApplyFriend::ApplyFriend(QWidget *parent) :
     ui->sure_btn->SetState("normal","hover","press");
     ui->cancel_btn->SetState("normal","hover","press");
     //连接确认和取消按钮的槽函数
-    // connect(ui->cancel_btn, &QPushButton::clicked, this, &ApplyFriend::SlotApplyCancel);
-    // connect(ui->sure_btn, &QPushButton::clicked, this, &ApplyFriend::SlotApplySure);
+    connect(ui->cancel_btn, &QPushButton::clicked, this, &ApplyFriend::SlotApplyCancel);
+    connect(ui->sure_btn, &QPushButton::clicked, this, &ApplyFriend::SlotApplySure);
 }
 
 ApplyFriend::~ApplyFriend()

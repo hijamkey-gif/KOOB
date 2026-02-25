@@ -520,3 +520,7 @@ ApplyFriendItem #addBtn[state='press'] {
     font-size: 12px;
     font-family: "Microsoft YaHei";
 }
+
+#red_point{
+    border-image: url(:/res/red_point.png);
+}

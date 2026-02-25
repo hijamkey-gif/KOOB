@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(TcpMgr::GetInstance().get(),&TcpMgr::sig_switch_chatdlg, this, &MainWindow::SlotSwitchChat);
 
     // 测试切换到聊天界面
-    SlotSwitchChat();
+    // SlotSwitchChat();
 
     this->setMinimumSize(800,500);
     //this->setMaximumSize(800,500);

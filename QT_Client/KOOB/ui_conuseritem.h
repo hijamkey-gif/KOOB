@@ -48,9 +48,10 @@ public:
         icon_lb->setMaximumSize(QSize(50, 50));
         red_point = new QLabel(widget);
         red_point->setObjectName("red_point");
-        red_point->setGeometry(QRect(27, 2, 30, 30));
+        red_point->setGeometry(QRect(25, 2, 30, 30));
         red_point->setMinimumSize(QSize(30, 30));
         red_point->setMaximumSize(QSize(30, 30));
+        red_point->setPixmap(QPixmap(QString::fromUtf8(":/res/red_point.png")));
 
         horizontalLayout->addWidget(widget);
 
@@ -70,7 +71,7 @@ public:
     {
         ConUserItem->setWindowTitle(QCoreApplication::translate("ConUserItem", "Form", nullptr));
         icon_lb->setText(QCoreApplication::translate("ConUserItem", "TextLabel", nullptr));
-        red_point->setText(QCoreApplication::translate("ConUserItem", "TextLabel", nullptr));
+        red_point->setText(QString());
         user_name_lb->setText(QCoreApplication::translate("ConUserItem", "TextLabel", nullptr));
     } // retranslateUi
 
