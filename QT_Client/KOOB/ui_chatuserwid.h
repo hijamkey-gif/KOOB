@@ -54,6 +54,12 @@ public:
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         icon_lb = new QLabel(icon_wid);
         icon_lb->setObjectName("icon_lb");
+        icon_lb->setEnabled(true);
+        QSizePolicy sizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(icon_lb->sizePolicy().hasHeightForWidth());
+        icon_lb->setSizePolicy(sizePolicy);
 
         horizontalLayout_2->addWidget(icon_lb);
 

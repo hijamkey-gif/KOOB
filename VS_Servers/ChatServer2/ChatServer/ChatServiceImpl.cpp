@@ -74,9 +74,9 @@ Status ChatServiceImpl::NotifyAuthFriend(ServerContext* context, const AuthFrien
 	bool b_info = GetBaseInfo(base_key, fromuid, user_info);
 	if (b_info) {
 		rtvalue["name"] = user_info->name;
-		/*rtvalue["nick"] = user_info->nick;
+		rtvalue["nick"] = user_info->nick;
 		rtvalue["icon"] = user_info->icon;
-		rtvalue["sex"] = user_info->sex;*/
+		rtvalue["sex"] = user_info->sex;
 	}
 	else {
 		rtvalue["error"] = ErrorCodes::UidInvalid;

@@ -301,7 +301,7 @@ LoadingDlg{
    border-radius: 20px; /* 设置圆角 */
 }
 
-#ApplyFriend{
+#ApplyFriend,#AuthenFriend{
     border: none;
     font-size: 14px;
     background: rgb(25, 33, 45);

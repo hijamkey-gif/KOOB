@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'applyfriend.ui'
+** Form generated from reading UI file 'authenfriend.ui'
 **
 ** Created by: Qt User Interface Compiler version 6.5.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef UI_APPLYFRIEND_H
-#define UI_APPLYFRIEND_H
+#ifndef UI_AUTHENFRIEND_H
+#define UI_AUTHENFRIEND_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
@@ -24,7 +24,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_ApplyFriend
+class Ui_AuthenFriend
 {
 public:
     QVBoxLayout *verticalLayout;
@@ -59,25 +59,25 @@ public:
     ClickedBtn *sure_btn;
     ClickedBtn *cancel_btn;
 
-    void setupUi(QDialog *ApplyFriend)
+    void setupUi(QDialog *AuthenFriend)
     {
-        if (ApplyFriend->objectName().isEmpty())
-            ApplyFriend->setObjectName("ApplyFriend");
-        ApplyFriend->resize(360, 560);
-        ApplyFriend->setMinimumSize(QSize(360, 400));
-        ApplyFriend->setMaximumSize(QSize(360, 1000));
-        verticalLayout = new QVBoxLayout(ApplyFriend);
+        if (AuthenFriend->objectName().isEmpty())
+            AuthenFriend->setObjectName("AuthenFriend");
+        AuthenFriend->resize(360, 592);
+        AuthenFriend->setMinimumSize(QSize(360, 400));
+        AuthenFriend->setMaximumSize(QSize(360, 1000));
+        verticalLayout = new QVBoxLayout(AuthenFriend);
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName("verticalLayout");
         verticalLayout->setContentsMargins(5, 0, 5, 0);
-        scrollArea = new QScrollArea(ApplyFriend);
+        scrollArea = new QScrollArea(AuthenFriend);
         scrollArea->setObjectName("scrollArea");
         scrollArea->setMinimumSize(QSize(0, 500));
         scrollArea->setWidgetResizable(true);
         scrollArea->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
         scrollcontent = new QWidget();
         scrollcontent->setObjectName("scrollcontent");
-        scrollcontent->setGeometry(QRect(0, 0, 348, 523));
+        scrollcontent->setGeometry(QRect(0, 0, 348, 555));
         verticalLayout_2 = new QVBoxLayout(scrollcontent);
         verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName("verticalLayout_2");
@@ -226,7 +226,7 @@ public:
 
         verticalLayout->addWidget(scrollArea);
 
-        apply_sure_wid = new QWidget(ApplyFriend);
+        apply_sure_wid = new QWidget(AuthenFriend);
         apply_sure_wid->setObjectName("apply_sure_wid");
         apply_sure_wid->setMinimumSize(QSize(0, 35));
         apply_sure_wid->setMaximumSize(QSize(16777215, 35));
@@ -252,30 +252,30 @@ public:
         verticalLayout->addWidget(apply_sure_wid);
 
 
-        retranslateUi(ApplyFriend);
+        retranslateUi(AuthenFriend);
 
-        QMetaObject::connectSlotsByName(ApplyFriend);
+        QMetaObject::connectSlotsByName(AuthenFriend);
     } // setupUi
 
-    void retranslateUi(QDialog *ApplyFriend)
+    void retranslateUi(QDialog *AuthenFriend)
     {
-        ApplyFriend->setWindowTitle(QCoreApplication::translate("ApplyFriend", "Dialog", nullptr));
-        apply_lb->setText(QCoreApplication::translate("ApplyFriend", "\347\224\263\350\257\267\346\267\273\345\212\240\345\245\275\345\217\213", nullptr));
-        label_2->setText(QCoreApplication::translate("ApplyFriend", "\345\217\221\351\200\201\346\267\273\345\212\240\346\234\213\345\217\213\347\224\263\350\257\267\357\274\232", nullptr));
-        label_3->setText(QCoreApplication::translate("ApplyFriend", "\345\244\207\346\263\250\345\220\215\357\274\232", nullptr));
-        label_4->setText(QCoreApplication::translate("ApplyFriend", "\346\240\207\347\255\276\357\274\232", nullptr));
+        AuthenFriend->setWindowTitle(QCoreApplication::translate("AuthenFriend", "Dialog", nullptr));
+        apply_lb->setText(QCoreApplication::translate("AuthenFriend", "\347\224\263\350\257\267\346\267\273\345\212\240\345\245\275\345\217\213", nullptr));
+        label_2->setText(QCoreApplication::translate("AuthenFriend", "\346\235\245\350\207\252\345\257\271\346\226\271\347\232\204\345\245\275\345\217\213\347\224\263\350\257\267\357\274\232", nullptr));
+        label_3->setText(QCoreApplication::translate("AuthenFriend", "\345\244\207\346\263\250\345\220\215\357\274\232", nullptr));
+        label_4->setText(QCoreApplication::translate("AuthenFriend", "\346\240\207\347\255\276\357\274\232", nullptr));
         tip_lb->setText(QString());
         more_lb->setText(QString());
-        sure_btn->setText(QCoreApplication::translate("ApplyFriend", "\347\241\256\350\256\244", nullptr));
-        cancel_btn->setText(QCoreApplication::translate("ApplyFriend", "\345\217\226\346\266\210", nullptr));
+        sure_btn->setText(QCoreApplication::translate("AuthenFriend", "\347\241\256\350\256\244", nullptr));
+        cancel_btn->setText(QCoreApplication::translate("AuthenFriend", "\345\217\226\346\266\210", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class ApplyFriend: public Ui_ApplyFriend {};
+    class AuthenFriend: public Ui_AuthenFriend {};
 } // namespace Ui
 
 QT_END_NAMESPACE
 
-#endif // UI_APPLYFRIEND_H
+#endif // UI_AUTHENFRIEND_H

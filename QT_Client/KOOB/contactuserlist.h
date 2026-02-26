@@ -7,6 +7,7 @@
 #include <QScrollBar>
 #include <QDebug>
 #include <memory>
+#include "userdata.h"
 
 class ConUserItem;
 
@@ -23,8 +24,8 @@ private:
 
 public slots:
     void slot_item_clicked(QListWidgetItem *item);
-//    void slot_add_auth_firend(std::shared_ptr<AuthInfo>);
-//    void slot_auth_rsp(std::shared_ptr<AuthRsp>);
+    void slot_add_auth_firend(std::shared_ptr<AuthInfo>);
+    void slot_auth_rsp(std::shared_ptr<AuthRsp>);
 signals:
     void sig_loading_contact_user();
     void sig_switch_apply_friend_page();
