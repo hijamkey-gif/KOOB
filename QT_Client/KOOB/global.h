@@ -138,5 +138,7 @@ const QString add_prefix = "添加标签 ";
 
 const int  tip_offset = 5;
 
+const int CHAT_COUNT_PER_PAGE = 12;
+
 #endif // GLOBAL_H
 

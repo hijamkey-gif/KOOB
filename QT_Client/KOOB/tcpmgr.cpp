@@ -105,10 +105,10 @@ void TcpMgr::initHandlers()
         if(jsonObj.contains("apply_list")){
             UserMgr::GetInstance()->AppendApplyList(jsonObj["apply_list"].toArray());
         }
-        //添加好友列表
-        // if (jsonObj.contains("friend_list")) {
-        //     UserMgr::GetInstance()->AppendFriendList(jsonObj["friend_list"].toArray());
-        // }
+        // 添加好友列表
+        if (jsonObj.contains("friend_list")) {
+            UserMgr::GetInstance()->AppendFriendList(jsonObj["friend_list"].toArray());
+        }
         emit sig_switch_chatdlg();
     });
 
@@ -129,14 +129,14 @@ void TcpMgr::initHandlers()
         if(!jsonObj.contains("error")){
             int err = ErrorCodes::ERR_JSON;
             qDebug() << "Search Failed, err is Json Parse Err" << err ;
-            emit sig_login_failed(err);
+            emit sig_user_search(nullptr);
             return;
         }
 
         int err = jsonObj["error"].toInt();
         if(err != ErrorCodes::SUCCESS){
             qDebug() << "search Failed, err is " << err ;
-            emit sig_login_failed(err);
+            emit sig_user_search(nullptr);
             return;
         }
         // UserMgr::GetInstance()->SetUid(jsonObj["uid"].toInt());
@@ -351,37 +351,37 @@ void TcpMgr::initHandlers()
         //ui设置送达等标记 todo...
     });
 
-    // _handlers.insert(ID_NOTIFY_TEXT_CHAT_MSG_REQ, [this](ReqId id, int len, QByteArray data) {
-    //     Q_UNUSED(len);
-    //     qDebug() << "handle id is " << id << " data is " << data;
-    //     // 将QByteArray转换为QJsonDocument
-    //     QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
+    _handlers.insert(ID_NOTIFY_TEXT_CHAT_MSG_REQ, [this](ReqId id, int len, QByteArray data) {
+        Q_UNUSED(len);
+        qDebug() << "handle id is " << id << " data is " << data;
+        // 将QByteArray转换为QJsonDocument
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(data);
 
-    //     // 检查转换是否成功
-    //     if (jsonDoc.isNull()) {
-    //         qDebug() << "Failed to create QJsonDocument.";
-    //         return;
-    //     }
+        // 检查转换是否成功
+        if (jsonDoc.isNull()) {
+            qDebug() << "Failed to create QJsonDocument.";
+            return;
+        }
 
-    //     QJsonObject jsonObj = jsonDoc.object();
+        QJsonObject jsonObj = jsonDoc.object();
 
-    //     if (!jsonObj.contains("error")) {
-    //         int err = ErrorCodes::ERR_JSON;
-    //         qDebug() << "Notify Chat Msg Failed, err is Json Parse Err" << err;
-    //         return;
-    //     }
+        if (!jsonObj.contains("error")) {
+            int err = ErrorCodes::ERR_JSON;
+            qDebug() << "Notify Chat Msg Failed, err is Json Parse Err" << err;
+            return;
+        }
 
-    //     int err = jsonObj["error"].toInt();
-    //     if (err != ErrorCodes::SUCCESS) {
-    //         qDebug() << "Notify Chat Msg Failed, err is " << err;
-    //         return;
-    //     }
+        int err = jsonObj["error"].toInt();
+        if (err != ErrorCodes::SUCCESS) {
+            qDebug() << "Notify Chat Msg Failed, err is " << err;
+            return;
+        }
 
-    //     qDebug() << "Receive Text Chat Notify Success " ;
-    //     auto msg_ptr = std::make_shared<TextChatMsg>(jsonObj["fromuid"].toInt(),
-    //                                                  jsonObj["touid"].toInt(),jsonObj["text_array"].toArray());
-    //     emit sig_text_chat_msg(msg_ptr);
-    // });
+        qDebug() << "Receive Text Chat Notify Success " ;
+        auto msg_ptr = std::make_shared<TextChatMsg>(jsonObj["fromuid"].toInt(),
+                                                     jsonObj["touid"].toInt(),jsonObj["text_array"].toArray());
+        emit sig_text_chat_msg(msg_ptr);
+    });
 
     // _handlers.insert(ID_NOTIFY_OFF_LINE_REQ,[this](ReqId id, int len, QByteArray data){
     //     Q_UNUSED(len);

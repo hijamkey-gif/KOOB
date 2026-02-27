@@ -195,6 +195,7 @@ std::shared_ptr<UserInfo> MysqlDao::GetUser(int uid)
 			user_ptr->name = res->getString("name");
 			user_ptr->nick = res->getString("nick");
 			user_ptr->desc = res->getString("desc");
+			user_ptr->icon = res->getString("icon");
 			user_ptr->sex = res->getInt("sex");
 			user_ptr->uid = res->getInt("uid");
 			break;
@@ -235,6 +236,7 @@ std::shared_ptr<UserInfo> MysqlDao::GetUser(std::string name) {
 			user_ptr->name = res->getString("name");
 			user_ptr->nick = res->getString("nick");
 			user_ptr->desc = res->getString("desc");
+			user_ptr->icon = res->getString("icon");
 			user_ptr->sex = res->getInt("sex");
 			user_ptr->uid = res->getInt("uid");
 			break;
@@ -295,7 +297,7 @@ bool MysqlDao::GetApplyList(int touid, std::vector<std::shared_ptr<ApplyInfo>>& 
 	try {
 		// 准备SQL语句, 根据起始id和限制条数返回列表
 		std::unique_ptr<sql::PreparedStatement> pstmt(con->_con->prepareStatement("select apply.from_uid, apply.status, user.name, "
-			"user.nick, user.sex from friend_apply as apply join user on apply.from_uid = user.uid where apply.to_uid = ? "
+			"user.nick, user.sex, user.icon from friend_apply as apply join user on apply.from_uid = user.uid where apply.to_uid = ? "
 			"and apply.id > ? order by apply.id ASC LIMIT ? "));
 
 		pstmt->setInt(1, touid); // 将uid替换为你要查询的uid
@@ -310,7 +312,8 @@ bool MysqlDao::GetApplyList(int touid, std::vector<std::shared_ptr<ApplyInfo>>& 
 			auto status = res->getInt("status");
 			auto nick = res->getString("nick");
 			auto sex = res->getInt("sex");
-			auto apply_ptr = std::make_shared<ApplyInfo>(uid, name, "", "", nick, sex, status);
+			auto icon = res->getString("icon");
+			auto apply_ptr = std::make_shared<ApplyInfo>(uid, name, "", icon, nick, sex, status);
 			applyList.push_back(apply_ptr);
 		}
 		return true;

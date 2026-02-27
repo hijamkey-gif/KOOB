@@ -68,19 +68,19 @@ void ContactUserList::addContactUserList()
     this->setItemWidget(_groupitem, groupCon);
     _groupitem->setFlags(_groupitem->flags() & ~Qt::ItemIsSelectable);
 
-    // //加载后端发送过来的好友列表
-    // auto con_list = UserMgr::GetInstance()->GetConListPerPage();
-    // for(auto & con_ele : con_list){
-    //     auto *con_user_wid = new ConUserItem();
-    //     con_user_wid->SetInfo(con_ele->_uid,con_ele->_name, con_ele->_icon);
-    //     QListWidgetItem *item = new QListWidgetItem;
-    //     //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
-    //     item->setSizeHint(con_user_wid->sizeHint());
-    //     this->addItem(item);
-    //     this->setItemWidget(item, con_user_wid);
-    // }
+    //加载后端发送过来的好友列表
+    auto con_list = UserMgr::GetInstance()->GetConListPerPage();
+    for(auto & con_ele : con_list){
+        auto *con_user_wid = new ConUserItem();
+        con_user_wid->SetInfo(con_ele->_uid,con_ele->_name, con_ele->_icon);
+        QListWidgetItem *item = new QListWidgetItem;
+        //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
+        item->setSizeHint(con_user_wid->sizeHint());
+        this->addItem(item);
+        this->setItemWidget(item, con_user_wid);
+    }
 
-    //UserMgr::GetInstance()->UpdateContactLoadedCount();
+    UserMgr::GetInstance()->UpdateContactLoadedCount();
 
     // 模拟列表， 创建QListWidgetItem，并设置自定义的widget
     for(int i = 0; i < 13; i++){
@@ -124,22 +124,18 @@ bool ContactUserList::eventFilter(QObject *watched, QEvent *event)
         int currentValue = scrollBar->value();
         //int pageSize = 10; // 每页加载的联系人数量
         if (maxScrollValue - currentValue <= 0) {
-
-            // auto b_loaded = UserMgr::GetInstance()->IsLoadChatFin();
-            // if(b_loaded){
-            //     return true;
-            // }
-
-            // if(_load_pending){
-            //     return true;
-            // }
-
-            // _load_pending = true;
-
-            // QTimer::singleShot(100, [this](){
-            //     _load_pending = false;
-            //     QCoreApplication::quit(); // 完成后退出应用程序
-            // });
+            auto b_loaded = UserMgr::GetInstance()->IsLoadChatFin();
+            if(b_loaded){
+                return true;
+            }
+            if(_load_pending){
+                return true;
+            }
+            _load_pending = true;
+            QTimer::singleShot(100, [this](){
+                _load_pending = false;
+                QCoreApplication::quit(); // 完成后退出应用程序
+            });
             // 滚动到底部，加载新的联系人
             qDebug()<<"load more contact user";
             //发送信号通知聊天界面加载更多聊天内容
@@ -185,10 +181,10 @@ void ContactUserList::slot_item_clicked(QListWidgetItem *item)
         // 创建对话框，提示用户
         qDebug()<< "contact user item clicked ";
 
-        //auto con_item = qobject_cast<ConUserItem*>(customItem);
-        //auto user_info = con_item->GetInfo();
+        auto con_item = qobject_cast<ConUserItem*>(customItem);
+        auto user_info = con_item->GetInfo();
         //跳转到好友申请界面
-        emit sig_switch_friend_info_page();
+        emit sig_switch_friend_info_page(user_info);
         return;
     }
 }
@@ -202,7 +198,6 @@ void ContactUserList::slot_add_auth_firend(std::shared_ptr<AuthInfo> auth_info)
     }
     // 在 groupitem 之后插入新项
     int randomValue = QRandomGenerator::global()->bounded(100); // 生成0到99之间的随机整数
-    int str_i = randomValue%strs.size();
     int head_i = randomValue%heads.size();
     auth_info->_icon = heads[head_i];
     auto *con_user_wid = new ConUserItem();
@@ -210,14 +205,11 @@ void ContactUserList::slot_add_auth_firend(std::shared_ptr<AuthInfo> auth_info)
     QListWidgetItem *item = new QListWidgetItem;
     //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
     item->setSizeHint(con_user_wid->sizeHint());
-
     // 获取 groupitem 的索引
     int index = this->row(_groupitem);
     // 在 groupitem 之后插入新项
     this->insertItem(index + 1, item);
-
     this->setItemWidget(item, con_user_wid);
-
 }
 
 void ContactUserList::slot_auth_rsp(std::shared_ptr<AuthRsp> auth_rsp)
@@ -231,9 +223,11 @@ void ContactUserList::slot_auth_rsp(std::shared_ptr<AuthRsp> auth_rsp)
     int randomValue = QRandomGenerator::global()->bounded(100); // 生成0到99之间的随机整数
     int str_i = randomValue%strs.size();
     int head_i = randomValue%heads.size();
-
+    if(auth_rsp->_icon.size() == 0){
+        auth_rsp->_icon == heads[head_i];
+    }
     auto *con_user_wid = new ConUserItem();
-    con_user_wid->SetInfo(auth_rsp->_uid ,auth_rsp->_name, heads[head_i]);
+    con_user_wid->SetInfo(auth_rsp->_uid ,auth_rsp->_name, auth_rsp->_icon);
     QListWidgetItem *item = new QListWidgetItem;
     //qDebug()<<"chat_user_wid sizeHint is " << chat_user_wid->sizeHint();
     item->setSizeHint(con_user_wid->sizeHint());

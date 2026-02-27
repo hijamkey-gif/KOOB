@@ -106,7 +106,7 @@ bool LogicSystem::GetBaseInfo(std::string base_key, int uid, std::shared_ptr<Use
 		userinfo->sex = root["sex"].asInt();
 		userinfo->icon = root["icon"].asString();
 		std::cout << "user login uid is  " << userinfo->uid << " name  is "
-			<< userinfo->name << " pwd is " << userinfo->pwd << " email is " << userinfo->email << endl;
+			<< userinfo->name << " pwd is " << userinfo->pwd << " email is " << userinfo->email <<"icon is"<<userinfo->icon<< endl;
 	}
 	else {
 		//redis中没有则查询mysql
@@ -129,6 +129,8 @@ bool LogicSystem::GetBaseInfo(std::string base_key, int uid, std::shared_ptr<Use
 		redis_root["desc"] = userinfo->desc;
 		redis_root["sex"] = userinfo->sex;
 		redis_root["icon"] = userinfo->icon;
+		std::cout << "user login uid is  " << userinfo->uid << " name  is "
+			<< userinfo->name << " pwd is " << userinfo->pwd << " email is " << userinfo->email << "icon is" << userinfo->icon << endl;
 		RedisMgr::GetInstance()->Set(base_key, redis_root.toStyledString());
 	}
 
@@ -346,6 +348,21 @@ void LogicSystem::LoginHandler(shared_ptr<CSession> session, const short &msg_id
 	}
 	//获取好友列表
 
+	std::vector<std::shared_ptr<UserInfo>> friend_list;
+	bool b_friend_list = GetFriendList(uid, friend_list);
+	for (auto& friend_ele : friend_list) {
+		Json::Value obj;
+		obj["name"] = friend_ele->name;
+		obj["uid"] = friend_ele->uid;
+		obj["icon"] = friend_ele->icon;
+		obj["nick"] = friend_ele->nick;
+		obj["sex"] = friend_ele->sex;
+		obj["desc"] = friend_ele->desc;
+		obj["back"] = friend_ele->back;
+		rtvalue["friend_list"].append(obj);
+	}
+
+
 	auto server_name = ConfigMgr::Inst().GetValue("SelfServer", "Name");
 	// 将登录数增加
 	auto rd_res = RedisMgr::GetInstance()->HGet(LOGIN_COUNT, server_name);
@@ -468,8 +485,9 @@ void LogicSystem::GetUserByName(std::string name, Json::Value& rtvalue)
 		auto nick = root["nick"].asString();
 		auto desc = root["desc"].asString();
 		auto sex = root["sex"].asInt();
+		auto icon = root["icon"].asString();
 		std::cout << "user  uid is  " << uid << " name  is "
-			<< name << " pwd is " << pwd << " email is " << email << endl;
+			<< name << " pwd is " << pwd << " email is " << email << " icon is " << icon << endl;
 
 		rtvalue["uid"] = uid;
 		rtvalue["pwd"] = pwd;
@@ -478,6 +496,7 @@ void LogicSystem::GetUserByName(std::string name, Json::Value& rtvalue)
 		rtvalue["nick"] = nick;
 		rtvalue["desc"] = desc;
 		rtvalue["sex"] = sex;
+		rtvalue["icon"] = icon;
 		return;
 	}
 
@@ -499,6 +518,7 @@ void LogicSystem::GetUserByName(std::string name, Json::Value& rtvalue)
 	redis_root["nick"] = user_info->nick;
 	redis_root["desc"] = user_info->desc;
 	redis_root["sex"] = user_info->sex;
+	redis_root["icon"] = user_info->icon;
 
 	RedisMgr::GetInstance()->Set(base_key, redis_root.toStyledString());
 
@@ -510,6 +530,7 @@ void LogicSystem::GetUserByName(std::string name, Json::Value& rtvalue)
 	rtvalue["nick"] = user_info->nick;
 	rtvalue["desc"] = user_info->desc;
 	rtvalue["sex"] = user_info->sex;
+	rtvalue["icon"] = user_info->icon;
 }
 
 void LogicSystem::SearchInfo(std::shared_ptr<CSession> session, const short& msg_id, const string& msg_data)
@@ -534,7 +555,6 @@ void LogicSystem::SearchInfo(std::shared_ptr<CSession> session, const short& msg
 		GetUserByName(uid_str, rtvalue);
 	}
 	return;
-
 }
 
 void LogicSystem::AddFriendApply(std::shared_ptr<CSession> session, const short& msg_id, const string& msg_data)

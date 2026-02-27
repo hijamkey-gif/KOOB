@@ -130,8 +130,17 @@ void SearchList::slot_user_search(std::shared_ptr<SearchInfo> si)
         _find_dlg = std::make_shared<FindFailDlg>(this);
     }else{
         // 查找已经是好友
+        auto self_uid = UserMgr::GetInstance()->GetUid();
+        if(si->_uid == self_uid){
+            return;
+        }
         // TODO ...
         // 查找不是好友
+        bool bExist = UserMgr::GetInstance()->CheckFriendById(si->_uid);
+        if(bExist){
+            emit sig_jump_chat_item(si);
+            return;
+        }
         _find_dlg = std::make_shared<FindSuccessDlg>(this);
         std::dynamic_pointer_cast<FindSuccessDlg>(_find_dlg)->SetSearchInfo(si);
     }

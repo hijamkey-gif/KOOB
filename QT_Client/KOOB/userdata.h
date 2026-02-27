@@ -2,6 +2,9 @@
 #define USERDATA_H
 
 #include <QString>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 class SearchInfo{
 public:
@@ -79,8 +82,8 @@ struct AuthRsp {
 
 struct TextChatData;
 struct FriendInfo {
-    FriendInfo(int uid, QString name, QString nick, QString icon,int sex):
-        _uid(uid),_name(name),_nick(nick),_icon(icon),_sex(sex){}
+    FriendInfo(int uid, QString name, QString nick, QString icon,int sex,QString desc = "",QString back = ""):
+        _uid(uid),_name(name),_nick(nick),_icon(icon),_sex(sex),_desc(desc),_back(back){}
 
     FriendInfo(std::shared_ptr<AuthInfo> auth_info):_uid(auth_info->_uid),
     _nick(auth_info->_nick),_icon(auth_info->_icon),_name(auth_info->_name),
@@ -130,6 +133,7 @@ struct UserInfo {
     UserInfo(std::shared_ptr<FriendInfo> friend_info):
         _uid(friend_info->_uid),_name(friend_info->_name),_nick(friend_info->_nick),
         _icon(friend_info->_icon),_sex(friend_info->_sex),_last_msg(""){
+        _chat_msgs = friend_info->_chat_msgs;
     }
 
     int _uid;
@@ -138,6 +142,34 @@ struct UserInfo {
     QString _icon;
     int _sex;
     QString _last_msg;
+    std::vector<std::shared_ptr<TextChatData>> _chat_msgs;
+};
+
+struct TextChatData{
+    TextChatData(QString msg_id, QString msg_content, int fromuid, int touid)
+        :_msg_id(msg_id),_msg_content(msg_content),_from_uid(fromuid),_to_uid(touid){
+
+    }
+    QString _msg_id;
+    QString _msg_content;
+    int _from_uid;
+    int _to_uid;
+};
+
+struct TextChatMsg{
+    TextChatMsg(int fromuid, int touid, QJsonArray arrays):
+        _from_uid(fromuid),_to_uid(touid){
+        for(auto  msg_data : arrays){
+            auto msg_obj = msg_data.toObject();
+            auto content = msg_obj["content"].toString();
+            auto msgid = msg_obj["msgid"].toString();
+            auto msg_ptr = std::make_shared<TextChatData>(msgid, content,fromuid, touid);
+            _chat_msgs.push_back(msg_ptr);
+        }
+    }
+    int _to_uid;
+    int _from_uid;
+    std::vector<std::shared_ptr<TextChatData>> _chat_msgs;
 };
 
 #endif // USERDATA_H

@@ -35,9 +35,9 @@ Status ChatServiceImpl::NotifyAddFriend(ServerContext* context, const AddFriendR
 	rtvalue["applyuid"] = request->applyuid();
 	rtvalue["name"] = request->name();
 	rtvalue["desc"] = request->desc();
-	/*rtvalue["icon"] = request->icon();
+	rtvalue["icon"] = request->icon();
 	rtvalue["sex"] = request->sex();
-	rtvalue["nick"] = request->nick();*/
+	rtvalue["nick"] = request->nick();
 
 	std::string return_str = rtvalue.toStyledString();
 
@@ -136,12 +136,12 @@ bool ChatServiceImpl::GetBaseInfo(std::string base_key, int uid, std::shared_ptr
 		userinfo->name = root["name"].asString();
 		userinfo->pwd = root["pwd"].asString();
 		userinfo->email = root["email"].asString();
-		/*userinfo->nick = root["nick"].asString();
+		userinfo->nick = root["nick"].asString();
 		userinfo->desc = root["desc"].asString();
 		userinfo->sex = root["sex"].asInt();
-		userinfo->icon = root["icon"].asString();*/
+		userinfo->icon = root["icon"].asString();
 		std::cout << "user login uid is  " << userinfo->uid << " name  is "
-			<< userinfo->name << " pwd is " << userinfo->pwd << " email is " << userinfo->email << endl;
+			<< userinfo->name << " icon is " << userinfo->icon << " email is " << userinfo->email << endl;
 	}
 	else {
 		//redis中没有则查询mysql
@@ -160,10 +160,12 @@ bool ChatServiceImpl::GetBaseInfo(std::string base_key, int uid, std::shared_ptr
 		redis_root["pwd"] = userinfo->pwd;
 		redis_root["name"] = userinfo->name;
 		redis_root["email"] = userinfo->email;
-		/*redis_root["nick"] = userinfo->nick;
+		redis_root["nick"] = userinfo->nick;
 		redis_root["desc"] = userinfo->desc;
 		redis_root["sex"] = userinfo->sex;
-		redis_root["icon"] = userinfo->icon;*/
+		redis_root["icon"] = userinfo->icon;
+		std::cout << "user login uid is  " << userinfo->uid << " name  is "
+			<< userinfo->name << " icon is " << userinfo->icon << " email is " << userinfo->email << endl;
 		RedisMgr::GetInstance()->Set(base_key, redis_root.toStyledString());
 	}
 
